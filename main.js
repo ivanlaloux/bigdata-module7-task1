@@ -131,11 +131,14 @@ function appendChartBars()
         return y(d.sales);
       })
       .attr('x', function(d, i) {
-        return x(d.product) + 1;
+        return x(d.product) + 5;
       })
       .attr('height', function(d, i) {
         return height - y(d.sales);
       })
-      .attr('width', x.bandwidth() - 1);
+      .attr('width', x.bandwidth() - 5)
+      .attr('style', function(d, i) {
+        return 'fill:' + d.color;
+      });
 
 }
