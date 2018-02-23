@@ -21,9 +21,9 @@ appendChartBars();
 
 // 1. let's start by selecting the SVG Node
 function setupCanvasSize() {
-  margin = {top: 0, left: 80, bottom: 20, right: 30};
-  width = 960 - margin.left - margin.right;
-  height = 120 - margin.top - margin.bottom;
+  margin = {top: 20, left: 80, bottom: 20, right: 30};
+  width = 300 - margin.left - margin.right;
+  height = 300 - margin.top - margin.bottom;
 }
 
 function appendSvg(domElement) {
@@ -39,25 +39,25 @@ function appendSvg(domElement) {
 // pixels
 // in this case we map the canvas range 0..350, to 0...maxSales
 // domain == data (data from 0 to maxSales) boundaries
-function setupXScale()
+function setupYScale()
 {
   var maxSales = d3.max(totalSales, function(d, i) {
     return d.sales;
   });
 
-  x = d3.scaleLinear()
-    .range([0, width])
-    .domain([0, maxSales]);
+  y = d3.scaleLinear()
+    .range([0, height])
+    .domain([maxSales, 0]);
 
 }
 
 // Now we don't have a linear range of values, we have a discrete
 // range of values (one per product)
 // Here we are generating an array of product names
-function setupYScale()
+function setupXScale()
 {
-  y = d3.scaleBand()
-    .rangeRound([0, height])
+  x = d3.scaleBand()
+    .rangeRound([0, width])
     .domain(totalSales.map(function(d, i) {
       return d.product;
     }));
@@ -76,7 +76,7 @@ function appendYAxis() {
   .call(d3.axisLeft(y));
 }
 
-function appendChartBars()
+function appendHorizontalChartBars()
 {
   // 2. Now let's select all the rectangles inside that svg
   // (right now is empty)
@@ -100,10 +100,42 @@ function appendChartBars()
       .attr('y', function(d, i) {
         return y(d.product);
       })
-      .attr('height', function(d, i) {
-          return y.bandwidth;
-      })
+      .attr('height', y.bandwidth)
       .attr('width', function(d, i) {
         return x(d.sales);
       });
+
+}
+
+function appendChartBars()
+{
+  // 2. Now let's select all the rectangles inside that svg
+  // (right now is empty)
+  var rects = svg.selectAll('rect')
+    .data(totalSales);
+
+    // Now it's time to append to the list of Rectangles we already have
+    var newRects = rects.enter();
+
+    // Let's append a new Rectangles
+    // UpperCorner:
+    //    Starting x position, the start from the axis
+    //    Starting y position, where the product starts on the y scale
+    // React width and height:
+    //    widtt: the space assign for each entry (product) on the Y axis
+    //    height: Now that we have the mapping previously done (linear)
+    //           we just pass the sales and use the X axis conversion to
+    //           get the right value
+    newRects.append('rect')
+      .attr('y', function(d, i) {
+        return y(d.sales);
+      })
+      .attr('x', function(d, i) {
+        return x(d.product) + 1;
+      })
+      .attr('height', function(d, i) {
+        return height - y(d.sales);
+      })
+      .attr('width', x.bandwidth() - 1);
+
 }
