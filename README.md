@@ -31,6 +31,8 @@ This is the resulting (final) chart:
 
 #### Implementation overview
 
+We will start from baseline code available in https://github.com/Lemoncode/d3js-samples/tree/master/samples/02%20Charts/04%20BarChartRefactor (credits to @brauliodiez).
+
 **1. Showing vertical bars**
 
 ![Vertical](./pictures/Vertical.PNG "Vertical bars")
