@@ -9,13 +9,31 @@ The aim of this task is to start from a basic, horizontal barchart and convert i
 * Customized bar colors
 * Legend included
 
-**Baseline**
+##### Baseline chart
 
 The following horizontal barchart will be used as the starting point for this exercise:
 
 ![Baseline](./pictures/Baseline.PNG "Baseline barchart for this task")
 
-**Showing vertical bars**
+##### Final chart
+
+This is the resulting (final) chart:
+
+![Final chart](./pictures/Final.PNG "Final chart")
+
+---
+
+#### Usage
+
+> Simply open _index.html_ on your favorite web browser.
+
+---
+
+#### Implementation overview
+
+**1. Showing vertical bars**
+
+![Vertical](./pictures/Vertical.PNG "Vertical bars")
 
 We need to switch X and Y axes by updating all related code:
 
@@ -72,11 +90,11 @@ function appendChartBars()
 }
 ```
 
-This is the resulting chart:
+**2. Setting custom bar colors**
 
-![Vertical](./pictures/Vertical.PNG "Vertical bars")
+![Custom colors](./pictures/VerticalColored.PNG "Customized colors")
 
-**Setting custom bar colors**
+A new attribute _'style'_ is added to fill the rectangles with custom colors:
 
 ```javascript
 function appendChartBars()
@@ -100,11 +118,9 @@ function appendChartBars()
 }
 ```
 
-This is the resulting chart:
+**3. Adding space between columns**
 
-![Custom colors](./pictures/VerticalColored.PNG "Customized colors")
-
-**Adding space between columns**
+![Spaced columns](./pictures/VerticalColoredSpaced.PNG "Added space between columns")
 
 _X position_ (+5) and_ width_ (+5) are adjusted for each rectangle in the barchart in order to leave some empty space between bars:
 
@@ -130,11 +146,11 @@ function appendChartBars()
 }
 ```
 
-This is the resulting chart:
+**4. Adding the legend**
 
-![Spaced columns](./pictures/VerticalColoredSpaced.PNG "Added space between columns")
+![Final chart](./pictures/Final.PNG "Final chart")
 
-**Adding a legend**
+The following code adds a new group containing 3 colored rectangles and 3 text labels:
 
 ```javascript
 function appendLegend()
@@ -162,6 +178,3 @@ function appendLegend()
 }
 ```
 
-This is the resulting (final) chart:
-
-![Legend](./pictures/Final.PNG "Added legend")
